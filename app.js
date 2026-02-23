@@ -4,6 +4,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const { v4: uuidv4 } = require('uuid');
+const cron = require('node-cron');
+const axios = require('axios');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -68,6 +70,19 @@ let isAdminAuthenticated = false; // In production use proper sessions
 app.get('/admin/dashboard', (req, res) => {
     const products = getProducts();
     res.render('admin-dashboard', { products });
+});
+
+
+app.get('/keep-alive', (req, res) => {
+    res.send('Ping complete');
+});
+
+cron.schedule('*/10 * * * *', async () => {
+    try {
+        const res = await axios.get(`https://smartdeals.onrender.com/keep-alive`);
+    } catch (err) {
+        console.error('Ping failed:', err.message);
+    }
 });
 
 app.post('/admin/products/add', (req, res) => {
