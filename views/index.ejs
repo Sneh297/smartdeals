@@ -29,9 +29,12 @@
                             <h2 class="product-name">
                                 <%= product.name %>
                             </h2>
-                            <p class="product-description">
+                            <p class="product-description modal-trigger" data-title="<%= product.name %>"
+                                data-desc="<%= product.description %>">
                                 <%= product.description %>
                             </p>
+                            <span class="read-more modal-trigger" data-title="<%= product.name %>"
+                                data-desc="<%= product.description %>">View Details</span>
                             <div class="product-price">₹<%= product.price %>
                             </div>
                             <a href="/track/<%= product.id %>" target="_blank" rel="nofollow noopener"
@@ -41,6 +44,44 @@
                     <% }) %>
                         <% } %>
     </div>
+
+    <!-- Modal Structure -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modalTitle" class="modal-title"></h2>
+            <div id="modalBody" class="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('productModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const closeBtn = document.querySelector('.close-modal');
+
+        document.querySelectorAll('.modal-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                modalTitle.innerText = trigger.getAttribute('data-title');
+                modalBody.innerText = trigger.getAttribute('data-desc');
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        closeBtn.onclick = closeModal;
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
 
     <%- include('partials/disclaimer') %>
         <%- include('partials/footer') %>

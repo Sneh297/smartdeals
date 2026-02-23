@@ -138,7 +138,25 @@ nav a:hover {
     font-size: 0.9rem;
     color: var(--text-secondary);
     margin-bottom: 1rem;
-    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.read-more {
+    color: var(--primary-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.read-more:hover {
+    text-decoration: underline;
 }
 
 .product-price {
@@ -275,4 +293,66 @@ footer a:hover {
     .product-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: modalScale 0.3s ease-out;
+}
+
+@keyframes modalScale {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.close-modal {
+    position: absolute;
+    right: 1.5rem;
+    top: 1rem;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: #000;
+}
+
+.modal-title {
+    margin-bottom: 1rem;
+    padding-right: 2rem;
+}
+
+.modal-body {
+    line-height: 1.6;
+    color: var(--text-main);
 }
