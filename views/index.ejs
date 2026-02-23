@@ -1,0 +1,46 @@
+<%- include('partials/header') %>
+
+    <section class="hero">
+        <h1>Top Recommended Products</h1>
+        <p>Handpicked deals from top marketplaces just for you.</p>
+    </section>
+
+    <div class="filters">
+        <% categories.forEach(category=> { %>
+            <a href="/?category=<%= category %>"
+                class="filter-btn <%= selectedCategory === category ? 'active' : '' %>">
+                <%= category %>
+            </a>
+            <% }) %>
+    </div>
+
+    <div class="product-grid">
+        <% if (products.length===0) { %>
+            <p>No products found in this category.</p>
+            <% } else { %>
+                <% products.forEach(product=> { %>
+                    <div class="product-card">
+                        <img src="<%= product.imageUrl %>" alt="<%= product.name %>" class="product-image"
+                            onerror="this.src='https://via.placeholder.com/300x200?text=Image+Not+Found'">
+                        <div class="product-info">
+                            <span class="product-category">
+                                <%= product.category %>
+                            </span>
+                            <h2 class="product-name">
+                                <%= product.name %>
+                            </h2>
+                            <p class="product-description">
+                                <%= product.description %>
+                            </p>
+                            <div class="product-price">₹<%= product.price %>
+                            </div>
+                            <a href="/track/<%= product.id %>" target="_blank" rel="nofollow noopener"
+                                class="btn-amazon">View on Store</a>
+                        </div>
+                    </div>
+                    <% }) %>
+                        <% } %>
+    </div>
+
+    <%- include('partials/disclaimer') %>
+        <%- include('partials/footer') %>

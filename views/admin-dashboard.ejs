@@ -1,0 +1,105 @@
+<%- include('partials/header', { title: 'Admin Dashboard' }) %>
+
+    <div class="admin-dashboard">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h1>Admin Dashboard</h1>
+            <a href="/" class="filter-btn">View Site</a>
+        </div>
+
+        <div class="admin-form">
+            <h2>Add New Product</h2>
+            <form action="/admin/products/add" method="POST">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="form-group">
+                        <label for="name">Product Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="e.g. Sony WH-1000XM4">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <input type="text" id="category" name="category" placeholder="e.g. Electronics, Home, Books">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description (Short) *</label>
+                    <textarea id="description" name="description" rows="3" required
+                        placeholder="A brief catchphrase or summary..."></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
+                    <div class="form-group">
+                        <label for="price">Price (₹) *</label>
+                        <input type="number" id="price" name="price" required placeholder="19999">
+                    </div>
+                    <div class="form-group">
+                        <label for="imageUrl">Image URL *</label>
+                        <input type="url" id="imageUrl" name="imageUrl" required
+                            placeholder="https://image-url.com/...">
+                    </div>
+                    <div class="form-group">
+                        <label for="affiliateLink">Product Link *</label>
+                        <input type="url" id="affiliateLink" name="affiliateLink" required
+                            placeholder="https://store.link/...">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-amazon"
+                    style="width: auto; padding: 0.75rem 2rem; border: none; cursor: pointer;">Add Product</button>
+            </form>
+        </div>
+
+        <h2>Existing Products</h2>
+        <div
+            style="margin-top: 1.5rem; background: #fff; padding: 1rem; border-radius: 12px; border: 1px solid #e7eaf3;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="text-align: left; border-bottom: 2px solid #e7eaf3;">
+                        <th style="padding: 1rem;">Product</th>
+                        <th style="padding: 1rem;">Category</th>
+                        <th style="padding: 1rem;">Price</th>
+                        <th style="padding: 1rem;">Clicks</th>
+                        <th style="padding: 1rem;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (products.length===0) { %>
+                        <tr>
+                            <td colspan="5" style="padding: 2rem; text-align: center; color: #666;">No products added
+                                yet.</td>
+                        </tr>
+                        <% } else { %>
+                            <% products.forEach(product=> { %>
+                                <tr style="border-bottom: 1px solid #e7eaf3;">
+                                    <td style="padding: 1rem;">
+                                        <div style="display: flex; align-items: center; gap: 1rem;">
+                                            <img src="<%= product.imageUrl %>"
+                                                style="width: 40px; height: 40px; object-fit: contain;">
+                                            <span>
+                                                <%= product.name %>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 1rem;">
+                                        <%= product.category %>
+                                    </td>
+                                    <td style="padding: 1rem;">₹<%= product.price %>
+                                    </td>
+                                    <td style="padding: 1rem;">
+                                        <%= product.clicks || 0 %>
+                                    </td>
+                                    <td style="padding: 1rem;">
+                                        <form action="/admin/products/delete/<%= product.id %>" method="POST"
+                                            onsubmit="return confirm('Are you sure?')">
+                                            <button type="submit"
+                                                style="background: none; border: none; color: #d93025; cursor: pointer; font-weight: 500;">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>

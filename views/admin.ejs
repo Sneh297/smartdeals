@@ -1,0 +1,22 @@
+<%- include('partials/header', { title: 'Admin Login' }) %>
+
+    <div style="max-width: 400px; margin: 4rem auto;">
+        <div class="admin-form">
+            <h2>Admin Access</h2>
+            <% if (error) { %>
+                <p style="color: #d93025; margin-bottom: 1rem;">
+                    <%= error %>
+                </p>
+                <% } %>
+                    <form action="/admin/login" method="POST">
+                        <div class="form-group">
+                            <label for="password">Enter Admin Password</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn-submit" style="width: 100%;">Login</button>
+                    </form>
+
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
