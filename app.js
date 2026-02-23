@@ -102,7 +102,8 @@ app.post('/admin/products/add', (req, res) => {
         affiliateLink,
         category: category || 'General',
         clicks: 0,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        lastUpdated: new Date().toISOString()
     };
 
     products.push(newProduct);

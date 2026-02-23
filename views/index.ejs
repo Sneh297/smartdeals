@@ -37,8 +37,13 @@
                                 data-desc="<%= product.description %>">View Details</span>
                             <div class="product-price">₹<%= product.price %>
                             </div>
-                            <a href="/track/<%= product.id %>" target="_blank" rel="nofollow noopener"
-                                class="btn-amazon">View on Store</a>
+                            <div class="price-timestamp"
+                                style="font-size: 0.75rem; color: #777; margin-top: -0.5rem; margin-bottom: 1rem;">
+                                as of <%= product.lastUpdated ? new Date(product.lastUpdated).toLocaleString() : new
+                                    Date().toLocaleString() %>
+                            </div>
+                            <a href="<%= product.affiliateLink %>" target="_blank" rel="sponsored nofollow noopener"
+                                class="btn-amazon">View on Amazon</a>
                         </div>
                     </div>
                     <% }) %>
